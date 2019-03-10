@@ -1,0 +1,33 @@
+
+#### FOLLOWING VIEWS ARE CREATED FOR QUESTION 2 & QUESTION 3:
+
+##### Question 2 VIEW
+```sql
+CREATE VIEW article_authors AS
+SELECT title, name
+FROM articles, authors
+WHERE articles.author = authors.id;
+```
+```sql 
+CREATE VIEW article_views AS
+SELECT title, count(log.id) as views
+FROM articles, log
+WHERE log.path = CONCAT('/article/', articles.slug)
+GROUP BY articles.title
+ORDER BY views desc;
+```
+
+##### Question 3 VIEW
+```sql
+CREATE VIEW logs AS
+SELECT to_char(time,'DD-MON-YYYY') as Date, count(*) as LogCount
+FROM log
+GROUP BY Date;
+```
+```sql
+CREATE VIEW errorlogs AS
+SELECT to_char(time,'DD-MON-YYYY') as Date, count(*) as ErrorCount
+FROM log
+WHERE STATUS = '404 NOT FOUND'
+GROUP BY Date;
+```
